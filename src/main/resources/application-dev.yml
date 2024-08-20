@@ -1,0 +1,47 @@
+server:
+  port: 8877
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/app_codingbat
+    username: postgres
+    password: root123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  config:
+    import:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  mail:
+    host: 'sandbox.smtp.mailtrap.io'
+    port: 465
+    username: df0cdf2a9e2881
+    password: 9538928a0cb6bf
+    properties:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+
+application:
+  host: "http://localhost:${server.port}"
+  jwt:
+    secret-key: 31321Jwt21cret76575646Key131231wt21cret76575646Key1312311321Jwt21cret76575646Key131231wt21cret76575646Key131231
+    access-token-exp: 86400000 # a day
+    refresh-token-exp: 24096000000 # 7 days
+  mail:
+    from: 'appcodingbat@info.com'
+    activate-url: '${application.host}/api/v1/auth/activate/'
+
