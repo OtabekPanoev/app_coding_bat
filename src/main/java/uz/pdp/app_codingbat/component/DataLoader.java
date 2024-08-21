@@ -30,7 +30,6 @@ public class DataLoader implements CommandLineRunner {
             initRoles();
         }
 
-
         System.out.println("Application started.............");
     }
 

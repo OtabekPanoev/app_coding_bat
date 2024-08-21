@@ -22,15 +22,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
-        log.error("Responding with unauthorized error. URL -  {}, Message - {}", request.getRequestURI(), ex.getMessage());
+        log.error("Responding with 401 unauthorized error. URL -  {}, Message - {}", request.getRequestURI(), ex.getMessage());
 
-        ApiResult<ErrorResponse> errorDataApiResult = ApiResult.errorResponse("Forbidden");
+        ApiResult<ErrorResponse> errorDataApiResult = ApiResult.errorResponse("unauthorized", 401);
         response.getWriter().write(objectMapper.writeValueAsString(errorDataApiResult));
 
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(401);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     }
-
-
-
 }

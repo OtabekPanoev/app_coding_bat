@@ -17,7 +17,6 @@ public class ApiResult<T> implements Serializable {
 
     private T data;
 
-
     private ApiResult(Boolean success) {
         this.success = success;
     }

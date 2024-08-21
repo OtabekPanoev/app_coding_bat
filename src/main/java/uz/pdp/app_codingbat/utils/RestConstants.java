@@ -8,4 +8,5 @@ public interface RestConstants {
 
     String BEARER_TOKEN = "Bearer ";
 
+    String AUTHENTICATION_HEADER = "Authorization";
 }

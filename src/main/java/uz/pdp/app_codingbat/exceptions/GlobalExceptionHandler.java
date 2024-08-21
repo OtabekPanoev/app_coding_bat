@@ -34,9 +34,7 @@ import uz.pdp.app_codingbat.payload.base.ApiResult;
 import uz.pdp.app_codingbat.payload.base.ErrorResponse;
 import uz.pdp.app_codingbat.utils.MessageConstants;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -71,7 +69,7 @@ public class GlobalExceptionHandler {
         if (StringUtils.hasText(errorFieldMessage)) {
             errorMessage = errorMessage.concat(" (").concat(errorFieldMessage).concat(")");
         }
-        return new ResponseEntity<>(ApiResult.errorResponse(errorMessage), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ApiResult.errorResponse(errorMessage, 400), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {TypeMismatchException.class})

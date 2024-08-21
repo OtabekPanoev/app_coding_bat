@@ -26,12 +26,12 @@ public class MailSenderService {
     @Async
     public void send(SendEmailDto emailDto) {
         try {
-            log.info("Sending email to " + emailDto.getTo());
+            log.info("Sending email to {}", emailDto.getTo());
 
             emailDto.setFrom(CoreUtils.getIfExists(emailDto.getFrom(), mailProp.getFrom()));
 
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setFrom(emailDto.getFrom());
             mimeMessageHelper.setTo(emailDto.getTo());
             mimeMessageHelper.setSubject(emailDto.getSubject());

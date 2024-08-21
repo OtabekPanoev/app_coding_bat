@@ -10,9 +10,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import uz.pdp.app_codingbat.config.base.BaseURI;
 import uz.pdp.app_codingbat.config.handler.JwtAuthenticationEntryPoint;
 import uz.pdp.app_codingbat.config.handler.MyAccessDeniedHandler;
-import uz.pdp.app_codingbat.config.filter.JwtAuthenticationFilter;
+import uz.pdp.app_codingbat.config.jwt.JwtAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
@@ -33,7 +34,11 @@ public class SecurityConfig {
     }
 
     private static final String[] WHITE_LIST = {
-            "/api/v1/auth/**"
+            BaseURI.API1 + BaseURI.AUTH + "/**"
+    };
+
+    private static final String[] BLACK_LIST = {
+            BaseURI.API1 + BaseURI.ADMIN + "/**"
     };
 
     @Bean
@@ -44,7 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(WHITE_LIST).permitAll()
-                                .requestMatchers("/api/v1/management/**").authenticated()
+                                .requestMatchers(BLACK_LIST).hasAnyRole("ADMIN")
                                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(handling -> {

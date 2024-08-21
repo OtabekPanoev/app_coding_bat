@@ -38,7 +38,7 @@ spring:
 application:
   host: "http://localhost:${server.port}"
   jwt:
-    secret-key: 31321Jwt21cret76575646Key131231wt21cret76575646Key1312311321Jwt21cret76575646Key131231wt21cret76575646Key131231
+    secret-key: '31321Jwt21cret76575646Key131231wt21cret76575646Key1312311321Jwt21cret76575646Key131231wt21cret76575646Key131231'
     access-token-exp: 86400000 # a day
     refresh-token-exp: 24096000000 # 7 days
   mail:
