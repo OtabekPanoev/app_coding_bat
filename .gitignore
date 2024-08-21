@@ -18,6 +18,7 @@ logs/
 /mvnw.cmd
 src/main/resources/*.sql
 /files/
+**/*.log
 
 
 HELP.md
