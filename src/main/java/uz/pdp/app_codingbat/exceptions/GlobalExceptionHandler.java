@@ -223,5 +223,4 @@ public class GlobalExceptionHandler {
 
         return (jsonPropertyAnnotation != null) ? jsonPropertyAnnotation.value() : fieldName;
     }
-
 }

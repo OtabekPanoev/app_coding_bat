@@ -34,9 +34,9 @@ spring:
         auth: true
         starttls:
           enable: true
-
-logging:
-  config: classpath:log-conf/logback-spring.xml
+#
+#logging:
+#  config: classpath:log-conf/logback-spring.xml
 
 application:
   host: "http://localhost:${server.port}"
