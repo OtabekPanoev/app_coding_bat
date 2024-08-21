@@ -1,4 +1,4 @@
-package uz.pdp.app_codingbat.config.base;
+package uz.pdp.app_codingbat.config.core;
 
 public interface BaseURI {
 

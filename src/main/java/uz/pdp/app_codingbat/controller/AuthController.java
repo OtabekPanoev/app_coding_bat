@@ -3,7 +3,7 @@ package uz.pdp.app_codingbat.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.app_codingbat.config.base.BaseURI;
+import uz.pdp.app_codingbat.config.core.BaseURI;
 import uz.pdp.app_codingbat.payload.auth.req.ReqRefreshToken;
 import uz.pdp.app_codingbat.payload.auth.req.ReqSignIn;
 import uz.pdp.app_codingbat.payload.auth.req.ReqSignUp;

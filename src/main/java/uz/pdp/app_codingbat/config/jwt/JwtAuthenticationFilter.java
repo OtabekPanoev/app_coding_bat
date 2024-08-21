@@ -14,9 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import uz.pdp.app_codingbat.config.UserPrincipal;
+import uz.pdp.app_codingbat.config.core.GlobalVar;
+import uz.pdp.app_codingbat.config.logger.Logger;
 import uz.pdp.app_codingbat.utils.RestConstants;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -36,6 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        GlobalVar.initStartTime();
+
+        String X_REQUEST_ID = request.getHeader("X-Request-ID");
+        GlobalVar.setRequestId(Optional.ofNullable(X_REQUEST_ID).orElse(UUID.randomUUID().toString()));
 
 
         try {
@@ -49,7 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            log.error("SET_USER_PRINCIPAL_IF_ALL_OK_METHOD_ERROR", e);
+            Logger.error("SET_USER_PRINCIPAL_IF_ALL_OK_METHOD_ERROR", e);
         }
 
         filterChain.doFilter(request, response);
