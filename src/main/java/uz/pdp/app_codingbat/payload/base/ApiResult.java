@@ -3,6 +3,7 @@ package uz.pdp.app_codingbat.payload.base;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.ToString;
+import uz.pdp.app_codingbat.payload.file.res.ResUploadFile;
 
 import java.io.Serializable;
 

@@ -16,7 +16,14 @@ public enum ErrorTypeEnum {
     LOGIN_OR_PASSWORD_ERROR(HttpStatus.FORBIDDEN),
     EMAIL_ALREADY_EXISTS,
     ROLE_NOT_FOUND(HttpStatus.NOT_FOUND),
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND);
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND),
+    FILE_NOT_FOUND,
+    FILE_NAME_REQUIRED,
+    ERROR_SAVING_FILE,
+    ATTACHMENT_NOT_FOUND,
+    FILE_CANNOT_DELETED
+
+    ;
 
     private HttpStatus status = HttpStatus.BAD_REQUEST;
 
