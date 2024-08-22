@@ -21,8 +21,17 @@ public class RestException extends RuntimeException {
         this.status = errorTypeEnum.getStatus();
     }
 
+    private RestException(@NotNull ErrorTypeEnum errorTypeEnum, HttpStatus status) {
+        this.errorTypeEnum = errorTypeEnum;
+        this.status = status;
+    }
+
     public static RestException restThrow(@NotNull ErrorTypeEnum errorTypeEnum) {
         return new RestException(errorTypeEnum);
+    }
+
+    public static RestException restThrow(@NotNull ErrorTypeEnum errorTypeEnum, HttpStatus status) {
+        return new RestException(errorTypeEnum, status);
     }
 
     public static Supplier<RestException> thew(@NotNull ErrorTypeEnum errorTypeEnum) {

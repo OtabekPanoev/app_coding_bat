@@ -25,7 +25,7 @@ public enum ErrorTypeEnum {
 
     ;
 
-    private HttpStatus status = HttpStatus.BAD_REQUEST;
+    private HttpStatus status = HttpStatus.BAD_REQUEST; // default status
 
     ErrorTypeEnum(HttpStatus status) {
         this.status = status;

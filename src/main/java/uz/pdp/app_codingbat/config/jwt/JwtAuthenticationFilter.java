@@ -40,11 +40,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        GlobalVar.clearContext();
         GlobalVar.initStartTime();
 
         String X_REQUEST_ID = request.getHeader("X-Request-ID");
         GlobalVar.setRequestId(Optional.ofNullable(X_REQUEST_ID).orElse(UUID.randomUUID().toString()));
-
 
         try {
             String authorization = request.getHeader(RestConstants.AUTHENTICATION_HEADER);
@@ -54,6 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 if (userPrincipal != null) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userPrincipal, null, userPrincipal.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                    GlobalVar.setUserPrincipal(userPrincipal);
+                    GlobalVar.setUser(userPrincipal.user());
+                    GlobalVar.setUserUuid(userPrincipal.getId());
                 }
             }
         } catch (Exception e) {

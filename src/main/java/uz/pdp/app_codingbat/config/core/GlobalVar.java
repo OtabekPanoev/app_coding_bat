@@ -4,15 +4,24 @@ import uz.pdp.app_codingbat.config.UserPrincipal;
 import uz.pdp.app_codingbat.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class GlobalVar {
 
     private final static ThreadLocal<LocalDateTime> START_TIME = ThreadLocal.withInitial(LocalDateTime::now);
     private final static ThreadLocal<Long> START_TIME_LONG = ThreadLocal.withInitial(System::currentTimeMillis);
     private final static ThreadLocal<String> H_REQUEST_ID = ThreadLocal.withInitial(String::new);
-    private final static ThreadLocal<String> USER_UUID = ThreadLocal.withInitial(String::new);
+    private final static ThreadLocal<UUID> USER_UUID = ThreadLocal.withInitial(UUID::randomUUID);
     private final static ThreadLocal<User> USER = ThreadLocal.withInitial(() -> null);
     private final static ThreadLocal<UserPrincipal> AUTH_USER = ThreadLocal.withInitial(() -> null);
+
+    public static User getUser() {
+        return GlobalVar.USER.get();
+    }
+
+    public static void setUser(User user) {
+        GlobalVar.USER.set(user);
+    }
 
     public static UserPrincipal getUserPrincipal() {
         return GlobalVar.AUTH_USER.get();
@@ -22,11 +31,11 @@ public class GlobalVar {
         GlobalVar.AUTH_USER.set(authUser);
     }
 
-    public static String getUserUUID() {
+    public static UUID getUserUUID() {
         return GlobalVar.USER_UUID.get();
     }
 
-    public static void setUserUuid(String userUuid) {
+    public static void setUserUuid(UUID userUuid) {
         GlobalVar.USER_UUID.set(userUuid);
     }
 
@@ -52,6 +61,12 @@ public class GlobalVar {
 
     public static void setRequestId(String requestId) {
         GlobalVar.H_REQUEST_ID.set(requestId);
+    }
+
+    public static void clearContext() {
+        GlobalVar.USER.remove();
+        GlobalVar.USER_UUID.remove();
+        GlobalVar.AUTH_USER.remove();
     }
 
 }

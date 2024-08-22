@@ -42,7 +42,7 @@ public class SecurityConfig {
     };
 
     private static final String[] BLACK_LIST = {
-            BaseURI.API1 + BaseURI.ADMIN + "/**"
+//            BaseURI.API1 + BaseURI.ADMIN + "/**"
     };
 
     @Bean

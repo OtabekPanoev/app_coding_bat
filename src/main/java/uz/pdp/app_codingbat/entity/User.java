@@ -12,6 +12,7 @@ import uz.pdp.app_codingbat.entity.template.AbsUUIDEntity;
 @AllArgsConstructor
 @Table(name = "auth_user")
 @Entity
+@ToString
 public class User extends AbsUUIDEntity {
 
     @Column(unique = true)

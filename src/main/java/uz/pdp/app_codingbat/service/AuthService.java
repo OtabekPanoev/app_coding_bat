@@ -3,6 +3,8 @@ package uz.pdp.app_codingbat.service;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,6 +36,7 @@ import static uz.pdp.app_codingbat.enums.ErrorTypeEnum.*;
 @RequiredArgsConstructor
 public class AuthService {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -43,6 +46,7 @@ public class AuthService {
     private final AppProp appProp;
 
     public ResBaseMsg signUp(ReqSignUp req) {
+        log.info("Sign up req: {}", req);
         if (userRepository.existsByEmail(req.getEmail()))
             throw RestException.restThrow(EMAIL_ALREADY_EXISTS);
 

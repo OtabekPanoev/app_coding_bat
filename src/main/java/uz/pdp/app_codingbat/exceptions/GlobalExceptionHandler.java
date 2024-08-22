@@ -124,7 +124,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleException(AccessDeniedException ex) {
         log.error("AccessDeniedException -> ", ex);
         return new ResponseEntity<>(
-                ApiResult.errorResponse(MessageConstants.DO_NOT_HAVE_PERMISSION_TO_USE_THIS_WAY, 400), //"Bu yo'lga kirishga huquq yo'q"
+                ApiResult.errorResponse(MessageConstants.DO_NOT_HAVE_PERMISSION_TO_USE_THIS_WAY, 403), //"Bu yo'lga kirishga huquq yo'q"
                 HttpStatus.BAD_REQUEST);
     }
 
@@ -171,7 +171,8 @@ public class GlobalExceptionHandler {
         log.error("HttpMediaTypeNotSupportedException -> ", ex);
         return new ResponseEntity<>(
                 ApiResult.errorResponse(MessageConstants.METHOD_ERROR, 415),
-                HttpStatus.METHOD_NOT_ALLOWED);
+                HttpStatus.METHOD_NOT_ALLOWED
+        );
     }
 
 

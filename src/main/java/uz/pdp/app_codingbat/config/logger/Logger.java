@@ -183,7 +183,7 @@ public class Logger {
                 String.format(
                         reqFormat,
                         dateFormat.format(dateTime),
-                        LogMode.INT,
+                        LogMode.GEN,
                         requestId,
                         method.name(),
                         url,
