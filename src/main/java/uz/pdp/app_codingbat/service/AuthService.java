@@ -3,15 +3,15 @@ package uz.pdp.app_codingbat.service;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uz.pdp.app_codingbat.config.UserPrincipal;
 import uz.pdp.app_codingbat.config.jwt.JwtTokenProvider;
+import uz.pdp.app_codingbat.config.logger.Logger;
 import uz.pdp.app_codingbat.config.prop.AppProp;
 import uz.pdp.app_codingbat.entity.Role;
 import uz.pdp.app_codingbat.entity.User;
@@ -29,14 +29,12 @@ import uz.pdp.app_codingbat.repository.RoleRepository;
 import uz.pdp.app_codingbat.repository.UserRepository;
 import uz.pdp.app_codingbat.utils.RestConstants;
 
-
 import static uz.pdp.app_codingbat.enums.ErrorTypeEnum.*;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
@@ -46,7 +44,6 @@ public class AuthService {
     private final AppProp appProp;
 
     public ResBaseMsg signUp(ReqSignUp req) {
-        log.info("Sign up req: {}", req);
         if (userRepository.existsByEmail(req.getEmail()))
             throw RestException.restThrow(EMAIL_ALREADY_EXISTS);
 
@@ -79,11 +76,18 @@ public class AuthService {
 
 
     public ResSignIn signIn(ReqSignIn req) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        req.getEmail(),
-                        req.getPassword()
-                ));
+        Authentication authentication;
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            req.getEmail(),
+                            req.getPassword()
+                    ));
+        } catch (BadCredentialsException e) {
+            Logger.error(e.getMessage(), e);
+            throw RestException.restThrow(LOGIN_OR_PASSWORD_ERROR);
+        }
+
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
 
@@ -146,6 +150,7 @@ public class AuthService {
                 .build();
     }
 
+    @SuppressWarnings("all")
     private @NonNull Role getRoleByName(@NonNull RoleEnum roleEnum) {
         return roleRepository.findByName(roleEnum.name())
                 .orElseThrow(RestException.thew(ROLE_NOT_FOUND));
